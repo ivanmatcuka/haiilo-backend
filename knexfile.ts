@@ -4,7 +4,7 @@ const config: { [key: string]: Knex.Config } = {
   development: {
     client: "sqlite3",
     connection: {
-      filename: "./database/db.sqlite3"
+      filename: "./database/db.sqlite3",
     },
     migrations: {
       directory: "./migrations",

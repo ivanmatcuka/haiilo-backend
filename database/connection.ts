@@ -1,9 +1,9 @@
-import knex from 'knex';
+import knex from "knex";
 
 const db = knex({
-  client: 'sqlite3',
+  client: "sqlite3",
   connection: {
-    filename: './db.sqlite',
+    filename: "./db.sqlite",
   },
 });
 
