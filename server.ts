@@ -5,14 +5,11 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 
 import indexRouter from "./routes/index";
+import { itemsRouter } from "./routes/items";
 
 const app = express();
 
-/**
- * View engine setup
- */
 app.set("views", path.join(process.cwd(), "views"));
-app.set("view engine", "jade");
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -21,8 +18,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(process.cwd(), "public")));
 
 app.use("/", indexRouter);
+app.use("/items", itemsRouter);
 
-app.use((req: Request, res: Response, next: NextFunction) => {
+app.use((_: Request, __: Response, next: NextFunction) => {
   next(createError(404));
 });
 

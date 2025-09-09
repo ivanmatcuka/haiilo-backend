@@ -1,9 +1,9 @@
-import express, { Request, Response } from "express";
+import { Request, Response, Router } from "express";
 
-const router = express.Router();
+const router = Router();
 
 router.get("/", (_: Request, res: Response) => {
-  res.send("API is running...");
+  res.send("This page is of no use.");
 });
 
 export default router;
