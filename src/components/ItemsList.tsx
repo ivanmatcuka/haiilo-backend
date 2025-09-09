@@ -1,11 +1,11 @@
-import { Item } from "../../models/item";
+import type { Item } from "@/types/item";
 
 interface ItemListProps {
   items: Item[];
   onAdd: (id: string) => void;
 }
 
-export default function ItemList({ items, onAdd }: ItemListProps) {
+export const ItemList = ({ items, onAdd }: ItemListProps) => {
   return (
     <div>
       <h2 className="font-bold">Items</h2>
@@ -24,4 +24,4 @@ export default function ItemList({ items, onAdd }: ItemListProps) {
       </ul>
     </div>
   );
-}
+};

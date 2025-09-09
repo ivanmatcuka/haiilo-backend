@@ -20,7 +20,7 @@ function normalizePort(val: string): number | string | false {
   return false;
 }
 
-function onError(error: NodeJS.ErrnoException): void {
+function onError(error: NodeJS.ErrnoException) {
   if (error.syscall !== "listen") {
     throw error;
   }
@@ -40,7 +40,7 @@ function onError(error: NodeJS.ErrnoException): void {
   }
 }
 
-function onListening(): void {
+function onListening() {
   const addr = server.address();
   if (!addr) return;
 
