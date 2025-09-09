@@ -10,6 +10,7 @@ const config: { [key: string]: Knex.Config } = {
       directory: "./migrations",
       extension: "ts",
     },
+    useNullAsDefault: true,
   },
 };
 

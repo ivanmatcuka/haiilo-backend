@@ -1,0 +1,25 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "controllers",
+    "repositories",
+    "database",
+    "models",
+    "bin",
+    "server.ts",
+    "bin/www.ts"
+  ],
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "nodenext",
+    "outDir": "./dist",
+    "rootDir": ".",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "lib": ["ES2020"]
+  },
+  "exclude": ["node_modules", "dist", "src"],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  }
+}

@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Carousel, CarouselItem } from "./components/ui/carousel";
-import { Item } from "../models/item";
-// import { fetchItems, checkout } from "./api";
-// import ItemList from "./components/ItemList";
-// import Cart from "./components/Cart";
+import { Carousel, CarouselItem } from "@/components/ui/carousel";
+import { itemsService } from "@/services/itemsService";
+import type { Item } from "@/types/item";
 
 function App() {
-  const [items, setItems] = useState<any[]>([]);
+  const [items, setItems] = useState<Item[]>([]);
   const [cart, setCart] = useState<number[]>([]);
   const [total, setTotal] = useState<number>(0);
 
   useEffect(() => {
-    // fetchItems().then(setItems);
+    itemsService.getAll().then((result) => setItems(result));
   }, []);
 
   const addToCart = (id: number) => {
