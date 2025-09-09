@@ -1,6 +1,6 @@
 import http from "http";
 import debugLib from "debug";
-import app from "../app";
+import app from "../server";
 
 const debug = debugLib("haiilo-backend:server");
 const port = normalizePort(process.env.PORT || "3000");

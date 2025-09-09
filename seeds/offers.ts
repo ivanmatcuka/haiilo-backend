@@ -4,9 +4,10 @@ import { faker } from "@faker-js/faker";
 
 const NUM_OFFERS = 10;
 const MAX_ITEMS_PER_OFFER = 5;
+const TABLE_NAME = "offers";
 
 export async function seed(knex: Knex): Promise<void> {
-  await knex("offers").del();
+  await knex(TABLE_NAME).del();
 
   const items = await knex("items");
 
@@ -30,5 +31,5 @@ export async function seed(knex: Knex): Promise<void> {
     };
   });
 
-  await knex("offers").insert(offers);
+  await knex(TABLE_NAME).insert(offers);
 }

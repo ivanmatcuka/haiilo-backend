@@ -3,9 +3,10 @@ import { v4 as uuidv4 } from "uuid";
 import { faker } from "@faker-js/faker";
 
 const NUM_PRODUCTS = 10;
+const TABLE_NAME = "items";
 
 export async function seed(knex: Knex): Promise<void> {
-  await knex("items").del();
+  await knex(TABLE_NAME).del();
 
   const products = Array.from({ length: NUM_PRODUCTS }).map(() => ({
     id: uuidv4(),
@@ -14,5 +15,5 @@ export async function seed(knex: Knex): Promise<void> {
     price: parseFloat(faker.commerce.price()),
   }));
 
-  await knex("items").insert(products);
+  await knex(TABLE_NAME).insert(products);
 }

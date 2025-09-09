@@ -6,7 +6,11 @@
     "start": "ts-node ./bin/www.ts",
     "knex": "./node_modules/.bin/knex",
     "seed": "npm run knex seed:run",
-    "migrate": "npm run knex migrate:latest --knexfile knexfile.ts --esm"
+    "migrate": "npm run knex migrate:latest --knexfile knexfile.ts --esm",
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -14,7 +18,9 @@
     "http-errors": "~1.6.3",
     "knex": "^3.1.0",
     "sqlite3": "^5.1.7",
-    "uuid": "^13.0.0"
+    "uuid": "^13.0.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^10.0.0",
@@ -30,6 +36,15 @@
     "jade": "^0.29.0",
     "morgan": "^1.10.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "@eslint/js": "^9.33.0",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react": "^5.0.0",
+    "eslint": "^9.33.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.3.0",
+    "vite": "^7.1.2"
   }
 }
