@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Carousel, CarouselItem } from "./components/ui/carousel";
+import { Item } from "../models/item";
 // import { fetchItems, checkout } from "./api";
 // import ItemList from "./components/ItemList";
 // import Cart from "./components/Cart";
@@ -24,11 +26,12 @@ function App() {
 
   return (
     <div className="p-4">
-      <h1 className="text-xl mb-4">Checkout Kata</h1>
-      {/* <ItemList items={items} onAdd={addToCart} /> */}
-      {/* <Cart cart={cart} items={items} /> */}
-      <Button onClick={handleCheckout}>Checkout</Button>
-      {total > 0 && <p className="mt-2">Total: {total}</p>}
+      <h1 className="text-xl mb-4">Pick Items</h1>
+      <Carousel>
+        {items.map((item: Item) => (
+          <CarouselItem key={item.id}>{item.name}</CarouselItem>
+        ))}
+      </Carousel>
     </div>
   );
 }
