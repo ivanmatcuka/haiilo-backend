@@ -1,27 +1,18 @@
 import type { Knex } from "knex";
 import { v4 as uuidv4 } from "uuid";
+import { faker } from "@faker-js/faker";
+
+const NUM_PRODUCTS = 10;
 
 export async function seed(knex: Knex): Promise<void> {
   await knex("items").del();
 
-  await knex("items").insert([
-    {
-      id: uuidv4(),
-      name: "Item 1",
-      description: "Description for Item 1",
-      price: 100,
-    },
-    {
-      id: uuidv4(),
-      name: "Item 2",
-      description: "Description for Item 2",
-      price: 200,
-    },
-    {
-      id: uuidv4(),
-      name: "Item 3",
-      description: "Description for Item 3",
-      price: 300,
-    },
-  ]);
+  const products = Array.from({ length: NUM_PRODUCTS }).map(() => ({
+    id: uuidv4(),
+    name: faker.commerce.productName(),
+    description: faker.commerce.productDescription(),
+    price: parseFloat(faker.commerce.price()),
+  }));
+
+  await knex("items").insert(products);
 }

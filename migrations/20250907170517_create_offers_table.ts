@@ -10,7 +10,7 @@ export async function up(knex: Knex): Promise<void> {
       .inTable("items")
       .onDelete("CASCADE");
     table.integer("numberOfItems").notNullable();
-    table.integer("price").notNullable();
+    table.float("price").notNullable();
     table.dateTime("validFrom").notNullable();
     table.dateTime("validTo").notNullable();
     table.timestamp("createdAt").defaultTo(knex.fn.now());

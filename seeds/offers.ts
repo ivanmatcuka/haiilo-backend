@@ -1,25 +1,34 @@
 import type { Knex } from "knex";
 import { v4 as uuidv4 } from "uuid";
+import { faker } from "@faker-js/faker";
+
+const NUM_OFFERS = 10;
+const MAX_ITEMS_PER_OFFER = 5;
 
 export async function seed(knex: Knex): Promise<void> {
   await knex("offers").del();
 
-  const items = await knex("items").select("id").limit(3);
+  const items = await knex("items");
 
   if (items.length === 0) {
     throw new Error("No items found. Seed the items table first.");
   }
 
-  await knex("offers").insert(
-    items.map((item, index) => ({
+  const offers = Array.from({ length: NUM_OFFERS }).map(() => {
+    const item = items[Math.floor(Math.random() * items.length)];
+    const numberOfItems = Math.floor(Math.random() * MAX_ITEMS_PER_OFFER) + 1;
+
+    return {
       id: uuidv4(),
       itemId: item.id,
-      numberOfItems: index + 1,
-      price: (index + 1) * 900,
-      validFrom: new Date(`2025-0${index + 1}-01T00:00:00Z`),
-      validTo: new Date(`2025-0${index + 1 * 6}-30T23:59:59Z`),
+      numberOfItems,
+      price: item.price * numberOfItems * 0.9, // Just guessing here, 10% discount for offers
+      validFrom: faker.date.past(),
+      validTo: faker.date.future(),
       createdAt: knex.fn.now(),
       updatedAt: knex.fn.now(),
-    }))
-  );
+    };
+  });
+
+  await knex("offers").insert(offers);
 }
