@@ -12,7 +12,7 @@ import { MinusCircleIcon } from "lucide-react";
 import { Badge } from "./ui/badge";
 
 export const Userbar = () => {
-  const { cartItems, total, totalOffer, clearItem, clearCart } = useCart();
+  const { cartItems, total, totalOffer, removeItem, clearCart } = useCart();
   const isOfferApplicable = !!totalOffer && totalOffer < total;
 
   return (
@@ -48,7 +48,7 @@ export const Userbar = () => {
                   <Button
                     size="sm"
                     variant="secondary"
-                    onClick={() => clearItem(ci.item.id)}
+                    onClick={() => removeItem(ci.item.id, true)}
                   >
                     <MinusCircleIcon color="red" />
                   </Button>

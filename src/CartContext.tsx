@@ -1,5 +1,3 @@
-"use client";
-
 import {
   createContext,
   useCallback,
@@ -22,8 +20,7 @@ type CartContextType = {
   offers: Offer[];
   cartItems: CartItem[];
   addItem: (item: Item) => void;
-  removeItem: (itemId: string) => void;
-  clearItem: (itemId: string) => void;
+  removeItem: (itemId: string, clear?: boolean) => void;
   clearCart: () => void;
   total: number;
   totalOffer: number;
@@ -51,9 +48,7 @@ export const CartProvider: FC<PropsWithChildren<CartProviderProps>> = ({
         new Date() <= new Date(offer.validTo) &&
         offer.numberOfItems === quantity;
 
-      if (hasValidOffer) {
-        return offer.price;
-      }
+      if (hasValidOffer) return offer.price;
 
       return item.price * quantity;
     },
@@ -80,31 +75,15 @@ export const CartProvider: FC<PropsWithChildren<CartProviderProps>> = ({
     });
   };
 
-  const removeItem = (itemId: string) => {
+  const removeItem = (itemId: string, clear: boolean = false) => {
     setCartItems((prev) =>
       prev
         .map((ci) =>
           ci.item.id === itemId
             ? {
                 ...ci,
-                quantity: ci.quantity - 1,
-                total: computeItemTotal(ci.item, ci.quantity - 1),
-              }
-            : ci
-        )
-        .filter((ci) => ci.quantity > 0)
-    );
-  };
-
-  const clearItem = (itemId: string) => {
-    setCartItems((prev) =>
-      prev
-        .map((ci) =>
-          ci.item.id === itemId
-            ? {
-                ...ci,
-                quantity: 0,
-                total: 0,
+                quantity: clear ? 0 : ci.quantity - 1,
+                total: clear ? 0 : computeItemTotal(ci.item, ci.quantity - 1),
               }
             : ci
         )
@@ -128,7 +107,6 @@ export const CartProvider: FC<PropsWithChildren<CartProviderProps>> = ({
         cartItems,
         total,
         totalOffer,
-        clearItem,
         addItem,
         removeItem,
         clearCart,
