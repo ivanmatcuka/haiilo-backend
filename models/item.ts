@@ -1,3 +1,5 @@
+import { Offer } from "./offer";
+
 export type Item = {
   id: string;
   name: string;
@@ -5,4 +7,5 @@ export type Item = {
   price: number;
   createdAt: Date;
   updatedAt: Date;
+  offers: Offer[];
 };

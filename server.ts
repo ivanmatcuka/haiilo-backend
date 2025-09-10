@@ -6,6 +6,7 @@ import logger from "morgan";
 
 import indexRouter from "./routes/index";
 import { itemsRouter } from "./routes/items";
+import { offersRouter } from "./routes/offers";
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.all("/*", function (_, res, next) {
 
 app.use("/", indexRouter);
 app.use("/items", itemsRouter);
+app.use("/offers", offersRouter);
 
 app.use((_: Request, __: Response, next: NextFunction) => {
   next(createError(404));

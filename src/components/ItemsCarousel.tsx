@@ -1,38 +1,21 @@
 import { useEffect, useState, type FC } from "react";
-import { IconShoppingBag } from "@tabler/icons-react";
-
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
-  CarouselItem,
   CarouselNext,
   CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
 import type { Item } from "@/types/item";
-import { itemsService } from "@/services/itemsService";
-import { Button } from "@/components/ui/button";
+import { useCart } from "@/CartContext";
+import { CustomCarouselItem } from "./CarouselItem";
 
 export const ItemsCarousel: FC = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
-  const [items, setItems] = useState<Item[]>([]);
-
-  useEffect(() => {
-    itemsService.getAll().then((result) => {
-      setItems(result);
-      setCount(result.length);
-    });
-  }, []);
+  const { items } = useCart();
 
   useEffect(() => {
     if (!api) return;
@@ -45,25 +28,16 @@ export const ItemsCarousel: FC = () => {
     });
   }, [api]);
 
+  useEffect(() => {
+    setCount(items.length);
+  }, [items]);
+
   return (
     <div>
       <Carousel setApi={setApi}>
         <CarouselContent>
           {items.map((item: Item, index) => (
-            <CarouselItem key={index}>
-              <Card>
-                <CardHeader>
-                  <CardTitle>{item.name}</CardTitle>
-                  <CardDescription>{item.description}</CardDescription>
-                </CardHeader>
-                <CardFooter>
-                  <Button>
-                    Add
-                    <IconShoppingBag />
-                  </Button>
-                </CardFooter>
-              </Card>
-            </CarouselItem>
+            <CustomCarouselItem item={item} key={index} />
           ))}
         </CarouselContent>
         <CarouselPrevious />
