@@ -1,4 +1,13 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { useEffect, useState, type FC } from "react";
+import { IconShoppingBag } from "@tabler/icons-react";
+
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -8,9 +17,9 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
-import { useEffect, useState, type FC } from "react";
-import type { Item } from "../item";
+import type { Item } from "@/types/item";
 import { itemsService } from "@/services/itemsService";
+import { Button } from "@/components/ui/button";
 
 export const ItemsCarousel: FC = () => {
   const [api, setApi] = useState<CarouselApi>();
@@ -37,13 +46,22 @@ export const ItemsCarousel: FC = () => {
   }, [api]);
 
   return (
-    <div className="mx-auto max-w-xl">
+    <div>
       <Carousel setApi={setApi}>
         <CarouselContent>
           {items.map((item: Item, index) => (
             <CarouselItem key={index}>
               <Card>
-                <CardContent>{item.name}</CardContent>
+                <CardHeader>
+                  <CardTitle>{item.name}</CardTitle>
+                  <CardDescription>{item.description}</CardDescription>
+                </CardHeader>
+                <CardFooter>
+                  <Button>
+                    Add
+                    <IconShoppingBag />
+                  </Button>
+                </CardFooter>
               </Card>
             </CarouselItem>
           ))}
