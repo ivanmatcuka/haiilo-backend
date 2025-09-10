@@ -1,9 +1,8 @@
-import { Request, Response, Router } from "express";
+import Router from "@koa/router";
 
-const router = Router();
-
-router.get("/", (_: Request, res: Response) => {
-  res.send("This page is of no use.");
+const router = new Router();
+router.get("/", async (ctx) => {
+  ctx.body = "This page is of no use.";
 });
 
 export default router;

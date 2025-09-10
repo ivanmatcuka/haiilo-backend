@@ -44,15 +44,14 @@ export const CartProvider: FC<PropsWithChildren<CartProviderProps>> = ({
 
   const computeItemTotal = useCallback(
     (item: Item, quantity: number): number => {
-      const offer = offers.find((o) => o.itemId === item.id);
-
-      if (
+      const offer = item.offers[0];
+      const hasValidOffer =
         offer &&
         new Date() >= new Date(offer.validFrom) &&
         new Date() <= new Date(offer.validTo) &&
-        offer.numberOfItems === quantity
-      ) {
-        console.log(offer.price);
+        offer.numberOfItems === quantity;
+
+      if (hasValidOffer) {
         return offer.price;
       }
 

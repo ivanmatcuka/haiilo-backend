@@ -1,44 +1,33 @@
-import createError from "http-errors";
-import express, { Request, Response, NextFunction } from "express";
-import path from "path";
-import cookieParser from "cookie-parser";
-import logger from "morgan";
+import Koa from "koa";
+import bodyParser from "koa-bodyparser";
+import cors from "@koa/cors";
 
 import indexRouter from "./routes/index";
 import { itemsRouter } from "./routes/items";
 import { offersRouter } from "./routes/offers";
+const PORT: number = Number(process.env.PORT) || 3000;
 
-const app = express();
+const app = new Koa();
 
-app.set("views", path.join(process.cwd(), "views"));
+app.use(bodyParser());
+app.use(cors());
 
-app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(process.cwd(), "public")));
+app.use(indexRouter.routes());
+app.use(indexRouter.allowedMethods());
+app.use(itemsRouter.routes());
+app.use(itemsRouter.allowedMethods());
+app.use(offersRouter.routes());
+app.use(offersRouter.allowedMethods());
 
-// This block is only meant for this task
-app.all("/*", function (_, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
+app.use(async (ctx, next) => {
+  await next();
+
+  if (ctx.status === 404) {
+    ctx.throw(404, "Not Found");
+  }
 });
 
-app.use("/", indexRouter);
-app.use("/items", itemsRouter);
-app.use("/offers", offersRouter);
-
-app.use((_: Request, __: Response, next: NextFunction) => {
-  next(createError(404));
-});
-
-app.use((err: any, req: Request, res: Response) => {
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
-
-  res.status(err.status || 500);
-  res.render("error");
-});
+app.on("error", console.error);
+app.listen(PORT);
 
 export default app;

@@ -1,8 +1,7 @@
+import Router from "@koa/router";
 import { offersController } from "../controllers/offers";
-import { Router } from "express";
 
-const router = Router();
-
+const router = new Router({ prefix: "/offers" });
 router.get("/", offersController.getAll);
 
 export { router as offersRouter };

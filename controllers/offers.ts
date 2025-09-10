@@ -1,13 +1,16 @@
 import { offersRepository } from "@/repositories/offers";
-import { Request, Response } from "express";
+import { Context } from "koa";
 
 export const offersController = {
-  getAll: async (_: Request, res: Response) => {
+  getAll: async (ctx: Context) => {
     try {
       const offers = await offersRepository.getAll();
-      res.status(200).json(offers);
+
+      ctx.status = 200;
+      ctx.body = offers;
     } catch (error) {
-      res.status(500).json({ message: "Error fetching items", error });
+      ctx.status = 500;
+      ctx.body = { message: "Error fetching offers", error };
     }
   },
 };

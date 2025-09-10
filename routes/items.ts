@@ -1,8 +1,7 @@
+import Router from "@koa/router";
 import { itemsController } from "../controllers/items";
-import { Router } from "express";
 
-const router = Router();
-
+const router = new Router({ prefix: "/items" });
 router.get("/", itemsController.getAll);
 
 export { router as itemsRouter };
